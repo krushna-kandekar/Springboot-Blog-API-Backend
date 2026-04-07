@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.blog.entities.Post;
 import com.example.blog.payloads.ApiResponse;
 import com.example.blog.payloads.PostDto;
+import com.example.blog.payloads.PostResponse;
 import com.example.blog.services.PostService;
 
 @RestController
@@ -39,14 +40,14 @@ public class PostController {
 		return new ResponseEntity<PostDto>(createPost,HttpStatus.CREATED);
 	}
 	
-//	get by user
+//	get by user (p)
 	@GetMapping("/user/{userId}/posts")
 	public ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId){
 		 List<PostDto> posts = this.postService.getPostsByUser(userId);
 		 return new ResponseEntity<List<PostDto>>(posts,HttpStatus.OK);
 	}
 	
-//	get by category
+//	get by category (p) 
 
 	@GetMapping("/category/{categoryId}/posts")
 	public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId){
@@ -56,12 +57,12 @@ public class PostController {
 	
 //	get all posts
 	@GetMapping("/posts")
-	public ResponseEntity<List<PostDto>> getAllPost(
+	public ResponseEntity<PostResponse> getAllPost(
 			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
 			){
-		List<PostDto> allPosts = this.postService.getAllPosts(pageNumber, pageSize);
-		return new ResponseEntity<List<PostDto>>(allPosts, HttpStatus.OK);
+		PostResponse postResponse = this.postService.getAllPosts(pageNumber, pageSize);
+		return new ResponseEntity<PostResponse>(postResponse, HttpStatus.OK);
 	}
 	
 //	get post details by id

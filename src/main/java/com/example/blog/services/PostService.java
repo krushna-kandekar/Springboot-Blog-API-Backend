@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.blog.entities.Post;
 import com.example.blog.payloads.PostDto;
+import com.example.blog.payloads.PostResponse;
 
 public interface PostService {
 
@@ -22,7 +23,7 @@ public interface PostService {
 	
 	//get all posts
 	
-	List<PostDto> getAllPosts(Integer pageNumber, Integer pageSize);
+	PostResponse getAllPosts(Integer pageNumber, Integer pageSize);
 	
 	//get single post
 	
