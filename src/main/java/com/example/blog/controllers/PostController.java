@@ -42,17 +42,24 @@ public class PostController {
 	
 //	get by user (p)
 	@GetMapping("/user/{userId}/posts")
-	public ResponseEntity<List<PostDto>> getPostsByUser(@PathVariable Integer userId){
-		 List<PostDto> posts = this.postService.getPostsByUser(userId);
-		 return new ResponseEntity<List<PostDto>>(posts,HttpStatus.OK);
+	public ResponseEntity<PostResponse> getPostsByUser(@PathVariable Integer userId,
+			 @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+			 @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+			){
+		
+		 PostResponse postResponse = this.postService.getPostsByUser(userId, pageNumber, pageSize);
+		 return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
 	}
 	
-//	get by category (p) 
+//	get by category 
 
 	@GetMapping("/category/{categoryId}/posts")
-	public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable Integer categoryId){
-		 List<PostDto> posts = this.postService.getPostsByCategory(categoryId);
-		 return new ResponseEntity<List<PostDto>>(posts,HttpStatus.OK);
+	public ResponseEntity<PostResponse> getPostsByCategory(@PathVariable Integer categoryId,
+			 @RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+			 @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+			){
+		 PostResponse postResponse = this.postService.getPostsByCategory(categoryId, pageNumber, pageSize);
+		 return new ResponseEntity<PostResponse>(postResponse,HttpStatus.OK);
 	}
 	
 //	get all posts

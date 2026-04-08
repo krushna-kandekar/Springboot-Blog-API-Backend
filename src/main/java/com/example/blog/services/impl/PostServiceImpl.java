@@ -95,20 +95,41 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDto> getPostsByCategory(Integer categoryId) {
+	public PostResponse getPostsByCategory(Integer categoryId, Integer pageNumber, Integer pageSize) {
+		PageRequest p = PageRequest.of(pageNumber, pageSize);
 		
 		Category cat = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "category id", categoryId));
-		List<Post> posts = this.postRepo.findByCategory(cat);
+		Page<Post> pagePost = this.postRepo.findByCategory(cat,p);
+		List<Post> posts = pagePost.getContent();
 		List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
-		return postDtos;
+		
+		PostResponse postResponse = new PostResponse();
+		postResponse.setContent(postDtos);
+		postResponse.setPageNumber(pagePost.getNumber());
+		postResponse.setPageSize(pagePost.getSize());
+		postResponse.setTotalElements(pagePost.getTotalElements());
+		postResponse.setTotalPages(pagePost.getTotalPages());
+		postResponse.setLastPage(pagePost.isLast());
+		return postResponse;
 	}
 
 	@Override
-	public List<PostDto> getPostsByUser(Integer userId) {
+	public PostResponse getPostsByUser(Integer userId, Integer pageNumber, Integer pageSize) {
+		PageRequest p = PageRequest.of(pageNumber, pageSize);
+		
         User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "user id", userId));
-        List<Post> posts = this.postRepo.findByUser(user);
+        Page<Post> pagePost = this.postRepo.findByUser(user,p);
+        List<Post> posts = pagePost.getContent();
         List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
-		return postDtos;
+        
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDtos);
+        postResponse.setPageNumber(pagePost.getNumber());
+        postResponse.setPageSize(pagePost.getSize());
+        postResponse.setTotalElements(pagePost.getTotalElements());
+        postResponse.setTotalPages(pagePost.getTotalPages());
+        postResponse.setLastPage(pagePost.isLast());
+		return postResponse;
 	}
 
 	@Override
