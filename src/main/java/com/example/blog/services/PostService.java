@@ -23,7 +23,7 @@ public interface PostService {
 	
 	//get all posts
 	
-	PostResponse getAllPosts(Integer pageNumber, Integer pageSize);
+	PostResponse getAllPosts(Integer pageNumber, Integer pageSize, String sortBy, String sortDir);
 	
 	//get single post
 	
@@ -39,5 +39,5 @@ public interface PostService {
 	
 	//search post
 	
-	List<Post> searchPost(String keyword);
+	List<PostDto> searchPost(String keyword);
 }
