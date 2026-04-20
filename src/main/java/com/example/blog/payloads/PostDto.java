@@ -1,8 +1,11 @@
 package com.example.blog.payloads;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.example.blog.entities.Category;
+import com.example.blog.entities.Comment;
 import com.example.blog.entities.User;
 
 import jakarta.persistence.JoinColumn;
@@ -29,6 +32,8 @@ public class PostDto {
 	private CategoryDto category;
 	
 	private UserDto user;
+	
+	private Set<Comment> comments = new HashSet<>();
 	
 	
 }
