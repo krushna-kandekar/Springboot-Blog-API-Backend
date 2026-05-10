@@ -25,4 +25,7 @@ public class Comment {
 	private Post post;
 	
 //	user mapping assisment
+	
+	@ManyToOne
+	private User user;
 }
